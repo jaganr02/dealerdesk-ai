@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" width="100%" height="100%">
+  <defs>
+    <linearGradient id="helmet" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+  </defs>
+  <rect width="200" height="140" fill="#f8fafc" rx="8"/>
+  <path d="M62 66 C62 38 80 24 105 24 C132 24 150 42 150 72 C150 90 135 100 108 100 C84 100 62 90 62 66 Z" fill="url(#helmet)"/>
+  <path d="M94 48 C122 48 138 58 140 72 C132 80 104 78 88 72 Z" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="100" y="128" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing="1">RIDER GEAR</text>
+</svg>

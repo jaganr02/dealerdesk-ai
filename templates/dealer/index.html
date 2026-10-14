@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DealerDesk - B2B Dealer Ordering Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/dealer/css/styles.css" />
+</head>
+<body>
+
+  <!-- Left Sidebar Navigation -->
+  <aside class="app-sidebar" id="appSidebar">
+    <div class="sidebar-header">
+      <div class="brand-wrapper">
+        <div class="brand-icon">D</div>
+        <div class="brand-text">
+          <h1>DealerDesk</h1>
+          <span class="hub-badge">Bengaluru Hub &bull; South India</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dealer Profile Mini Widget -->
+    <div class="sidebar-profile">
+      <div class="profile-avatar-row">
+        <div class="profile-avatar" id="sidebarAvatar">SL</div>
+        <div class="profile-details">
+          <div class="profile-name" id="sidebarDealerName">Sri Lakshmi Motors</div>
+          <div class="profile-code">
+            <span id="sidebarDealerCode">DLR-KA-0012</span>
+            <span class="role-tag">DEALER</span>
+          </div>
+        </div>
+      </div>
+      <div class="credit-bar-box">
+        <div class="credit-labels">
+          <span>Available Credit</span>
+          <span class="val" id="sidebarCreditVal">&#8377;3,75,500.00</span>
+        </div>
+        <div class="credit-progress-track">
+          <div class="credit-progress-fill" id="sidebarCreditBar" style="width: 75%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="sidebar-nav">
+      <a class="nav-item active" data-view="catalogue">
+        <span class="icon">📦</span>
+        <span>Catalogue</span>
+        <span class="counter-badge">600 SKUs</span>
+      </a>
+      <a class="nav-item" data-view="assistant">
+        <span class="icon">🤖</span>
+        <span>Dealer Assistant</span>
+        <span class="counter-badge" style="background: #0284c7; color: #fff;">AI GenAI</span>
+      </a>
+      <a class="nav-item" data-view="forecast">
+        <span class="icon">📈</span>
+        <span>Demand &amp; Reorder</span>
+        <span class="counter-badge" style="background: #10b981; color: #fff;">40 SKUs</span>
+      </a>
+      <a class="nav-item" data-view="orders">
+        <span class="icon">📋</span>
+        <span>My Orders</span>
+        <span class="counter-badge" id="sidebarOrderCountBadge">0 Orders</span>
+      </a>
+      <a class="nav-item" data-view="profile">
+        <span class="icon">🏢</span>
+        <span>My Profile</span>
+      </a>
+    </nav>
+
+    <!-- Footer Actions -->
+    <div class="sidebar-footer">
+      <button type="button" class="btn-sidebar-auth" id="sidebarAuthBtn">
+        <span>🔑</span>
+        <span>Switch / Sign In</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main App Layout -->
+  <main class="app-main">
+    <!-- Top Sticky Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search automotive spare parts by name, SKU (e.g. BRK, ENG), or brand..."
+          />
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="greeting" style="font-size: 0.82rem; color: #64748b; text-align: right;">
+          Signed in as: <strong id="headerDealerName" style="color: #0f172a;">Sri Lakshmi Motors</strong>
+        </div>
+        <button type="button" class="cart-btn" id="openCartBtn">
+          <span>🛒</span>
+          <span>Cart</span>
+          <span class="cart-badge" id="headerCartBadge" style="display: none;">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Page Content Areas -->
+    <div class="page-container">
+
+      <!-- ===================================================================
+           View 1: Product Catalogue
+           =================================================================== -->
+      <section id="catalogueView">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Automotive Spare Parts Catalogue</h2>
+            <p>Direct distributor supply from Bengaluru central warehouse to 25 authorized South India dealerships.</p>
+          </div>
+        </div>
+
+        <!-- Filter and Categories Bar -->
+        <div class="filter-controls-bar">
+          <div class="category-pills" id="categoryPills">
+            <!-- Dynamically populated category buttons -->
+          </div>
+
+          <div class="filter-options-row">
+            <div class="filter-group">
+              <span class="filter-label">Stock Status:</span>
+              <select class="select-custom" id="stockFilter">
+                <option value="all">All Inventory</option>
+                <option value="in-stock">In Stock (&gt;10 units)</option>
+                <option value="low-stock">Low Stock (&le;10 units)</option>
+              </select>
+
+              <span class="filter-label">Sort By:</span>
+              <select class="select-custom" id="sortSelect">
+                <option value="featured">Featured / Default</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="name-asc">Part Name: A to Z</option>
+              </select>
+
+              <button type="button" class="btn-secondary" id="resetFiltersBtn" style="padding: 6px 12px; font-size: 0.8rem;">
+                Reset Filters
+              </button>
+            </div>
+
+            <div class="results-count" id="resultsCount">
+              Showing 0 products
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div class="product-grid" id="productGrid">
+          <!-- Dynamically populated product cards -->
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-container" id="paginationBox" style="display: none;">
+          <div class="pagination-info" id="paginationInfo">Showing items</div>
+          <div class="pagination-controls" id="paginationControls"></div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           View 2: My Orders View
+           =================================================================== -->
+      <section id="ordersView" style="display: none;">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Order History &amp; Consignments</h2>
+            <p>Review purchase orders, dispatch tracking, and historical line-item snapshots.</p>
+          </div>
+        </div>
+
+        <div class="orders-table-wrapper">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order Number</th>
+                <th>Order Date</th>
+                <th>Line Items</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody">
+              <!-- Dynamically populated orders -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           View 3: My Profile View
+           =================================================================== -->
+      <section id="profileView" style="display: none;">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Dealer Account &amp; Credit Profile</h2>
+            <p>Authorized dealership business profile and credit facility records.</p>
+          </div>
+          <button type="button" class="btn-secondary" id="btnEditProfile">
+            ✏️ Edit Profile Details
+          </button>
+        </div>
+
+        <div class="profile-layout-grid">
+          <!-- Hero Card -->
+          <div class="profile-card profile-hero">
+            <div class="profile-hero-avatar" id="profileHeroInitials">SL</div>
+            <h3 id="profileHeroName">Sri Lakshmi Motors</h3>
+            <div class="profile-hero-code" id="profileHeroCode">DLR-KA-0012</div>
+            <div style="margin-top: 14px;">
+              <span class="role-tag" style="font-size: 0.75rem; padding: 3px 10px;">VERIFIED DEALER ACCOUNT</span>
+            </div>
+
+            <div style="margin-top: 24px; text-align: left; background: #f8fafc; padding: 14px; border-radius: 8px;">
+              <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Security Notice</div>
+              <p style="font-size: 0.78rem; color: #475569; margin-top: 4px; line-height: 1.4;">
+                Account role and permissions are strictly enforced by the backend and cannot be self-modified.
+              </p>
+            </div>
+          </div>
+
+          <!-- Detailed Information Card -->
+          <div class="profile-card">
+            <div class="profile-info-grid">
+              <div class="info-item">
+                <div class="item-label">Account Username</div>
+                <div class="item-val" id="profUsername">-</div>
+              </div>
+              <div class="info-item">
+                <div class="item-label">Registered Business Name</div>
+                <div class="item-val" id="profBusinessName">-</div>
+              </div>
+              <div class="info-item">
+                <div class="item-label">Authorized Contact Person</div>
+                <div class="item-val" id="profContactPerson">-</div>
+              </div>
+              <div class="info-item">
+                <div class="item-label">Phone Number</div>
+                <div class="item-val" id="profPhone">-</div>
+              </div>
+              <div class="info-item">
+                <div class="item-label">Official Email</div>
+                <div class="item-val" id="profEmail">-</div>
+              </div>
+              <div class="info-item">
+                <div class="item-label">GSTIN (Tax Identifier)</div>
+                <div class="item-val" id="profGstin" style="font-family: monospace;">-</div>
+              </div>
+              <div class="info-item" style="grid-column: 1 / -1;">
+                <div class="item-label">Dealership Dispatch Address</div>
+                <div class="item-val" id="profAddress">-</div>
+              </div>
+              <div class="info-item" style="grid-column: 1 / -1;">
+                <div class="item-label">City, State &amp; PIN</div>
+                <div class="item-val" id="profLocation">-</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 14px;">Distributor Credit Facility</h4>
+              <div class="profile-info-grid">
+                <div class="info-item">
+                  <div class="item-label">Approved Credit Limit</div>
+                  <div class="item-val" id="profCreditLimit">&#8377;5,00,000.00</div>
+                </div>
+                <div class="info-item">
+                  <div class="item-label">Current Outstanding Balance</div>
+                  <div class="item-val" id="profOutstanding" style="color: #dc2626;">&#8377;1,24,500.00</div>
+                </div>
+                <div class="info-item">
+                  <div class="item-label">Available Ordering Credit</div>
+                  <div class="item-val" id="profAvailableCredit" style="color: #16a34a;">&#8377;3,75,500.00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           View 4: AI Dealer Assistant View (§9)
+           =================================================================== -->
+      <section id="assistantView" style="display: none;">
+        <div class="assistant-container">
+          <div class="assistant-header">
+            <div class="assistant-title-group">
+              <div class="assistant-avatar">🤖</div>
+              <div class="assistant-info">
+                <h3>VIKMO Dealer Assistant</h3>
+                <p>GenAI LLM with Database Tool Calling &bull; Real Stock &bull; DRAFT Orders</p>
+              </div>
+            </div>
+            <div class="assistant-meta-tags">
+              <span class="meta-badge online">&#9679; LLM Connected</span>
+              <span class="meta-badge model">gemini-2.5-flash</span>
+              <span class="meta-badge dealer" id="assistantDealerBadge">Dealer #1: Sri Lakshmi Motors</span>
+              <button type="button" class="btn-new-session" id="btnNewSession">🔄 New Session</button>
+            </div>
+          </div>
+
+          <!-- Quick Test Prompt Chips for Video Demo -->
+          <div class="assistant-chips-bar">
+            <span class="chip-label">Demo Prompts:</span>
+            <button type="button" class="prompt-chip" data-prompt="Do you have brake pads for Bajaj Pulsar 150?">
+              🔍 1. Search Pulsar 150 Pads
+            </button>
+            <button type="button" class="prompt-chip" data-prompt="How many units of BRK-1044 are currently available in stock?">
+              📦 2. Check Live Stock (BRK-1044)
+            </button>
+            <button type="button" class="prompt-chip" data-prompt="What is the price and brand of the part you just recommended?">
+              💰 3. Follow-up: Price &amp; Brand
+            </button>
+            <button type="button" class="prompt-chip" data-prompt="Please create a draft order for 2 units of BRK-1044">
+              🛒 4. Create Draft Order (2 units)
+            </button>
+            <button type="button" class="prompt-chip" data-prompt="Can you write a poem about motorcycles?">
+              🛡️ 5. Off-Topic Test
+            </button>
+          </div>
+
+          <!-- Messages Scroll View -->
+          <div class="chat-messages-container" id="assistantMessagesContainer">
+            <div class="chat-bubble-row assistant">
+              <div class="chat-avatar-mini bot">🤖</div>
+              <div class="chat-bubble">
+                <div class="bubble-text">
+                  Hello! I am your <strong>VIKMO DealerDesk AI Assistant</strong>.
+                  I am connected directly to your PostgreSQL catalogue and central warehouse inventory.
+
+                  You can ask me to:
+                  &bull; <strong>Search spare parts</strong> for any vehicle (e.g., <em>"Brake pads for Pulsar 150"</em>)
+                  &bull; <strong>Check live stock</strong> and current wholesale pricing
+                  &bull; <strong>Create DRAFT orders</strong> automatically with 18% GST calculation
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Bar -->
+          <div class="assistant-input-area">
+            <input
+              type="text"
+              id="assistantInput"
+              placeholder="Ask about auto parts, check warehouse stock, or create draft orders..."
+              autocomplete="off"
+            />
+            <button type="button" class="btn-assistant-send" id="btnAssistantSend">
+              <span>Send</span>
+              <span>➤</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           View 5: Demand Forecasting & Automated Reorder Plan (§10)
+           =================================================================== -->
+      <section id="forecastView" style="display: none;">
+        <div class="page-header">
+          <div class="page-title">
+            <h2>Demand Forecasting &amp; Automated Reorder Plan</h2>
+            <p>4-week ML predictive demand analysis and inventory replenishment triggers for 40 key SKUs.</p>
+          </div>
+          <button type="button" class="btn-secondary" id="btnRefreshForecast" style="padding: 6px 14px; font-size: 0.82rem;">
+            🔄 Refresh Calculations
+          </button>
+        </div>
+
+        <!-- Summary KPI Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Forecast Monitored SKUs</div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-top: 4px;" id="kpiTotalSkus">40</div>
+            <div style="font-size: 0.75rem; color: #10b981; margin-top: 4px;">100% Catalogue Tracked</div>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Reorder Actions Required</div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #e11d48; margin-top: 4px;" id="kpiReorderNeeded">-</div>
+            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">Stock &lt; Reorder Point</div>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Avg Supplier Lead Time</div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #2563eb; margin-top: 4px;" id="kpiAvgLeadTime">2.6 Wks</div>
+            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">1 to 4 Weeks Delivery</div>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Safety Stock Algorithm</div>
+            <div style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-top: 8px;">95% Service Level</div>
+            <div style="font-size: 0.75rem; color: #64748b; margin-top: 2px;">Formula: &lceil;1.65 &times; &sigma; &times; &radic;L&rceil;</div>
+          </div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="filter-controls-bar" style="margin-bottom: 16px;">
+          <div class="filter-options-row" style="width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div class="filter-group">
+              <span class="filter-label">Filter SKU:</span>
+              <input type="text" id="forecastSearchInput" placeholder="Filter by SKU (e.g. FIL-1016)..." style="padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" />
+              
+              <span class="filter-label">Status:</span>
+              <select class="select-custom" id="forecastStatusFilter">
+                <option value="all">All 40 SKUs</option>
+                <option value="reorder-only">Needs Reorder Only</option>
+                <option value="healthy-only">Optimal Stock Only</option>
+              </select>
+            </div>
+            <div class="results-count" id="forecastCount">Showing 40 SKUs</div>
+          </div>
+        </div>
+
+        <!-- Reorder Table -->
+        <div class="orders-table-wrapper">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>SKU</th>
+                <th>Live Stock</th>
+                <th>Lead Time (L)</th>
+                <th>Lead Time Demand</th>
+                <th>Safety Stock</th>
+                <th>Reorder Point</th>
+                <th>Suggested Reorder</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="forecastTableBody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Floating Quick Assistant Button -->
+  <button type="button" class="floating-assistant-btn" id="openAssistantFloatingBtn" title="Chat with AI Dealer Assistant">
+    <span>🤖</span>
+    <span class="pulse-indicator"></span>
+  </button>
+
+  <!-- ===================================================================
+       Cart Sliding Drawer
+       =================================================================== -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>Dealer Purchase Cart</h3>
+      <button type="button" class="drawer-close-btn" id="closeCartBtn">&times;</button>
+    </div>
+
+    <div class="drawer-body">
+      <div id="cartEmptyView" class="cart-empty-view">
+        <div class="icon">🛒</div>
+        <h4>Your cart is empty</h4>
+        <p>Browse the spare parts catalogue and add items to your order request.</p>
+      </div>
+      <div class="cart-items-list" id="cartItemsList">
+        <!-- Dynamically rendered cart line items -->
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <div class="summary-row">
+        <span>Subtotal (Excl. GST)</span>
+        <strong id="drawerSubtotal">&#8377;0.00</strong>
+      </div>
+      <div class="summary-row">
+        <span>Estimated GST (18% / 28%)</span>
+        <span id="drawerGst">&#8377;0.00</span>
+      </div>
+      <div class="summary-row total-row">
+        <span>Estimated Order Total</span>
+        <span id="drawerTotal" style="color: #0284c7;">&#8377;0.00</span>
+      </div>
+
+      <div class="tax-disclaimer">
+        ℹ️ Frontend preview only. Official tax invoice and stock reservation will be calculated upon backend order confirmation.
+      </div>
+
+      <button type="button" class="btn-checkout" id="btnDrawerCheckout" disabled>
+        Proceed to Review Draft Order
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===================================================================
+       Modal: Order Details View
+       =================================================================== -->
+  <div class="modal-backdrop" id="orderDetailsModal">
+    <div class="modal-dialog wide">
+      <div class="modal-header">
+        <div>
+          <h3>Order Details: <span id="modalOrderNum">ORD-0000</span></h3>
+          <div style="font-size: 0.8rem; color: #64748b; margin-top: 2px;">
+            Placed on <span id="modalOrderDate">Date</span> &bull; Status: <span id="modalOrderStatus" class="status-badge">Status</span>
+          </div>
+        </div>
+        <button type="button" class="drawer-close-btn modal-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="margin-bottom: 16px; background: #f8fafc; padding: 12px 16px; border-radius: 8px;">
+          <strong style="font-size: 0.8rem; text-transform: uppercase; color: #64748b;">Consignment Notes:</strong>
+          <div id="modalOrderNotes" style="font-size: 0.85rem; color: #334155; margin-top: 2px;">Notes</div>
+        </div>
+
+        <h4 style="font-size: 0.95rem; margin-bottom: 10px; color: #0f172a;">Ordered Spare Parts Lines</h4>
+        <div class="orders-table-wrapper">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Product &amp; SKU</th>
+                <th>Qty</th>
+                <th>Locked Unit Price</th>
+                <th>GST Rate &amp; Amount</th>
+                <th>Line Total</th>
+              </tr>
+            </thead>
+            <tbody id="modalOrderItemsList">
+              <!-- Dynamically populated line items -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 18px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+          <div style="font-size: 0.85rem; color: #64748b;">Subtotal: <strong id="modalOrderSubtotal">&#8377;0.00</strong></div>
+          <div style="font-size: 0.85rem; color: #64748b;">Total GST: <strong id="modalOrderGst">&#8377;0.00</strong></div>
+          <div style="font-size: 1.15rem; font-weight: 800; color: #0284c7; margin-top: 4px;">Grand Total: <span id="modalOrderTotal">&#8377;0.00</span></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary modal-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       Modal: Edit Profile Details
+       =================================================================== -->
+  <div class="modal-backdrop" id="editProfileModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Edit Dealership Contact Details</h3>
+        <button type="button" class="drawer-close-btn modal-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="editContactPerson">Contact Person</label>
+          <input type="text" id="editContactPerson" />
+        </div>
+        <div class="form-group">
+          <label for="editPhone">Phone Number</label>
+          <input type="text" id="editPhone" />
+        </div>
+        <div class="form-group">
+          <label for="editAddress">Dealership Dispatch Address</label>
+          <textarea id="editAddress" rows="3"></textarea>
+          <div class="field-help">Edits update client demonstration state; persistent database updates will be wired up via backend API.</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary modal-close-btn">Cancel</button>
+        <button type="button" class="btn-checkout" id="btnSaveProfileModal" style="width: auto; padding: 8px 18px;">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       Modal: Authentication & Switch Account
+       =================================================================== -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Dealer Account Authentication</h3>
+        <button type="button" class="drawer-close-btn modal-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 16px;">
+          Log in with your DealerDesk credentials to connect live JWT sessions, or use the pre-configured demonstration account.
+        </p>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" placeholder="e.g. testdealer or your username" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="Your password" required />
+          </div>
+
+          <div id="authStatusMsg" style="font-size: 0.82rem; color: #0284c7; min-height: 18px; margin-bottom: 10px;"></div>
+
+          <button type="submit" class="btn-checkout" style="width: 100%; margin-bottom: 12px;">
+            Sign In with JWT Backend
+          </button>
+        </form>
+
+        <div style="text-align: center; margin: 12px 0; color: #94a3b8; font-size: 0.8rem;">&mdash; OR &mdash;</div>
+
+        <button type="button" class="btn-secondary" id="btnUseDemoDealer" style="width: 100%; text-align: center;">
+          Switch to Demo Dealer Account (Sri Lakshmi Motors)
+        </button>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary modal-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 4-Week Demand Forecast Breakdown -->
+  <div class="modal-backdrop" id="forecastModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="forecastModalTitle">4-Week Demand Forecast</h3>
+        <button type="button" class="drawer-close-btn modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="forecastModalBody">
+        <!-- Rendered forecast weeks -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary modal-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Main Application Script -->
+  <script src="/static/dealer/js/app.js"></script>
+</body>
+</html>

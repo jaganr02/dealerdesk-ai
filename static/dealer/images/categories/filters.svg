@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" width="100%" height="100%">
+  <defs>
+    <linearGradient id="canister" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1e293b"/><stop offset="50%" stop-color="#475569"/><stop offset="100%" stop-color="#0f172a"/></linearGradient>
+  </defs>
+  <rect width="200" height="140" fill="#f8fafc" rx="8"/>
+  <rect x="42" y="30" width="52" height="64" rx="6" fill="#f97316" stroke="#c2410c" stroke-width="2"/>
+  <g stroke="#ea580c" stroke-width="2">
+    <line x1="48" y1="30" x2="48" y2="94"/><line x1="54" y1="30" x2="54" y2="94"/>
+    <line x1="60" y1="30" x2="60" y2="94"/><line x1="66" y1="30" x2="66" y2="94"/>
+    <line x1="72" y1="30" x2="72" y2="94"/><line x1="78" y1="30" x2="78" y2="94"/>
+    <line x1="84" y1="30" x2="84" y2="94"/>
+  </g>
+  <rect x="112" y="32" width="46" height="58" rx="8" fill="url(#canister)" stroke="#0f172a" stroke-width="2"/>
+  <rect x="116" y="90" width="38" height="6" rx="2" fill="#94a3b8"/>
+  <text x="135" y="65" font-family="monospace" font-size="8" font-weight="700" fill="#38bdf8" text-anchor="middle">OIL</text>
+  <text x="100" y="128" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing="1">FILTERS</text>
+</svg>

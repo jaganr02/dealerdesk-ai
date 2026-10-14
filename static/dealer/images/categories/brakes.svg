@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg1" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#e2e8f0"/></radialGradient>
+    <linearGradient id="rotorGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#cbd5e1"/><stop offset="50%" stop-color="#94a3b8"/><stop offset="100%" stop-color="#64748b"/></linearGradient>
+    <linearGradient id="caliper" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#b91c1c"/></linearGradient>
+  </defs>
+  <rect width="200" height="140" fill="url(#bg1)" rx="8"/>
+  <circle cx="95" cy="65" r="46" fill="none" stroke="url(#rotorGrad)" stroke-width="14"/>
+  <circle cx="95" cy="65" r="24" fill="#e2e8f0" stroke="#64748b" stroke-width="3" stroke-dasharray="6 4"/>
+  <circle cx="95" cy="65" r="12" fill="#475569"/>
+  <g stroke="#ffffff" stroke-width="2" opacity="0.7">
+    <line x1="95" y1="28" x2="95" y2="35"/><line x1="95" y1="95" x2="95" y2="102"/>
+    <line x1="58" y1="65" x2="65" y2="65"/><line x1="125" y1="65" x2="132" y2="65"/>
+  </g>
+  <path d="M115 32 C138 35 148 50 148 70 C148 85 138 96 118 100 L122 88 C134 84 136 74 134 66 C132 56 124 48 115 44 Z" fill="url(#caliper)"/>
+  <circle cx="132" cy="58" r="4.5" fill="#f87171" stroke="#7f1d1d" stroke-width="1.5"/>
+  <circle cx="130" cy="74" r="4.5" fill="#f87171" stroke="#7f1d1d" stroke-width="1.5"/>
+  <text x="100" y="128" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing="1">BRAKE SYSTEMS</text>
+</svg>

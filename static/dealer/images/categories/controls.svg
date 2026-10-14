@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" width="100%" height="100%">
+  <rect width="200" height="140" fill="#f8fafc" rx="8"/>
+  <rect x="36" y="50" width="70" height="26" rx="5" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <g stroke="#475569" stroke-width="2">
+    <line x1="46" y1="50" x2="46" y2="76"/><line x1="56" y1="50" x2="56" y2="76"/>
+    <line x1="66" y1="50" x2="66" y2="76"/><line x1="76" y1="50" x2="76" y2="76"/>
+    <line x1="86" y1="50" x2="86" y2="76"/>
+  </g>
+  <path d="M106 63 Q136 48 165 56 Q150 72 106 70 Z" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+  <circle cx="163" cy="58" r="4.5" fill="#94a3b8"/>
+  <text x="100" y="128" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing="1">CONTROLS &amp; GRIPS</text>
+</svg>
